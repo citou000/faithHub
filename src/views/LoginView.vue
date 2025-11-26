@@ -2,16 +2,25 @@
 import { ref } from 'vue'
 import BaseButton from '@/components/BaseButton.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import { useToast } from 'vue-toastification'
+import { supabase } from '@/lib/supabase'
 
 const email = ref<string>('')
 const password = ref<string>('')
 const loading = ref<boolean>(false)
+const toast = useToast()
 
-const handleConnect = () => {
-  alert(
-    'La fonctionnalité de connexion est actuellement désactivée pour maintenance. Veuillez réessayer plus tard.',
-  )
-  return
+const handleConnect = async () => {
+  try {
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email.value,
+      password: password.value,
+    })
+    if (error) {
+      throw
+    toast.error("Erreur dans la création d'utilisateur.")
+    return
+  }
 }
 </script>
 
