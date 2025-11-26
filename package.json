@@ -15,9 +15,11 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.84.0",
     "pinia": "^3.0.3",
     "vue": "^3.5.22",
-    "vue-router": "^4.6.3"
+    "vue-router": "^4.6.3",
+    "vue-toastification": "^1.7.14"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.17",

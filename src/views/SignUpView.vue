@@ -1,75 +1,20 @@
-<script setup>
-import BaseButton from '@/components/BaseButton.vue'
-import logo from '@/assets/logo.svg'
-import { supabase } from '@/lib/supabaseClient'
+<script setup lang="ts">
 import { ref } from 'vue'
-import { useMemberStore } from '@/store/member'
-import { storeToRefs } from 'pinia'
-import router from '@/router'
-import { useToast } from 'vue-toastification'
-import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import BaseButton from '@/components/BaseButton.vue'
 
-const store = useMemberStore()
-const { logging } = storeToRefs(store)
-const toast = useToast()
-logging.value = true
-const loading = ref(false)
+const loading = ref<boolean>(false)
 
-const email = ref('')
-const password = ref('')
-const confirmedPassword = ref('')
-const name = ref('')
-const role = ref('mentor')
+const email = ref<string>('')
+const password = ref<string>('')
+const confirmedPassword = ref<string>('')
+const name = ref<string>('')
+const role = ref<string>('mentor')
 
-const handleConnect = async () => {
-  if (!email.value || !password.value || !confirmedPassword.value || !name.value) {
-    toast.error('All fields are required')
-    return
-  }
-
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
-  if (!regex.test(email.value)) {
-    toast.error('Invalid email address')
-    return
-  }
-
-  if (password.value !== confirmedPassword.value) {
-    toast.error('Passwords do not match')
-    return
-  }
-
-  if (password.value.length < 8) {
-    toast.error('Password must be at least 8 characters long')
-    return
-  }
-
-  try {
-    loading.value = true
-    const { error: signupError } = await supabase.auth.signUp({
-      email: email.value,
-      password: password.value,
-      options: {
-        data: {
-          name: name.value,
-          role: role.value,
-        },
-        emailRedirectTo: window.location.origin + '/confirmation',
-      },
-    })
-    if (signupError) {
-      toast.error(signupError.message)
-      loading.value = false
-      return
-    }
-    loading.value = false
-    toast.success('Signup successful! Please check your email to confirm your account.')
-    localStorage.setItem('pendingEmail', true)
-    router.push('/confirmation')
-  } catch (err) {
-    toast.error('Something went wrong. Please try again later.', err)
-    loading.value = false
-  }
+const handleConnect = () => {
+  alert(
+    "La fonctionnalité d'inscription est actuellement désactivée pour maintenance. Veuillez réessayer plus tard.",
+  )
+  return
 }
 </script>
 
@@ -79,7 +24,7 @@ const handleConnect = async () => {
       class="bg-white py-8 flex flex-col gap-4 px-2 md:w-md md:h-auto size-full md:text-base md:rounded-2xl text-sm relative justify-center"
     >
       <div class="flex flex-col items-center">
-        <img :src="logo" alt="Logo" class="size-8 object-contain" />
+        <!-- <img :src="logo" alt="Logo" class="size-8 object-contain" /> -->
         <h1 class="text-balance text-gray-400">Bienvenue sur Soul Connect</h1>
       </div>
       <form
@@ -127,29 +72,6 @@ const handleConnect = async () => {
             class="border-2 border-purple-100 focus:border-purple-400 outline-0 focus:border-2 rounded-md py-2 px-1 transition-all ease-in"
           />
         </div>
-
-        <div class="flex flex-col gap-1 w-full">
-          <label for="role">Rôle</label>
-          <select
-            id="role"
-            v-model="role"
-            class="border-2 border-purple-100 focus:border-purple-400 outline-0 focus:border-2 rounded-md py-2 px-1 transition-all ease-in"
-          >
-            <option value="admin">Admin</option>
-            <option value="mentor">Mentor</option>
-          </select>
-        </div>
-        <!-- <div class="flex flex-col gap-1 w-full" v-if="role === 'mentor'">
-          <label for="accessCode">Code d'accès à une organisation</label>
-          <input
-            required
-            type="text"
-            id="accessCode"
-            v-model="accessCode"
-            class="border-2 border-purple-100 focus:border-purple-400 outline-0 focus:border-2 rounded-md py-2 px-1 transition-all ease-in"
-          />
-        </div> -->
-
         <div class="flex justify-center mt-4 w-full">
           <BaseButton
             variant="primary"

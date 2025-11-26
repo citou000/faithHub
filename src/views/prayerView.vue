@@ -12,8 +12,8 @@ const anon = ref(false)
       <div class="w-full h-64 overflow-hidden rounded-t-xl">
         <img src="/src/assets/prayer.jpg" alt="" />
       </div>
-      <div class="w-full max-w-2xl rounded-xl px-8 py-6">
-        <h1 class="text-4xl font-bold text-gray-700 text-center pt-20 mb-6 pb-4">
+      <div class="w-full max-w-2xl rounded-xl px-8">
+        <h1 class="text-4xl font-bold text-gray-700 mb-6 p-4 text-left">
           Soumettez vos sujets de prière
         </h1>
         <blockquote class="mb-4 border-l-3 pl-2">

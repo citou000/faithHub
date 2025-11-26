@@ -3,7 +3,7 @@ import { RouterLink } from 'vue-router'
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center h-screen bg-gray-100">
+  <div class="flex flex-col items-center justify-center h-screen bg-gray-100 w-full">
     <h1 class="text-6xl font-bold text-purple-600 mb-4">404</h1>
     <p class="text-xl text-gray-700 mb-8">Oups! La page que vous recherchez n'existe pas.</p>
     <RouterLink to="/">

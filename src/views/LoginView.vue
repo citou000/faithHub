@@ -1,55 +1,28 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-// import BaseButton from '@/components/BaseButton.vue';
-// import logo from '@/assets/logo.svg';
-// import { supabase } from '@/lib/supabaseClient';
-// import { useMemberStore } from '@/store/member';
-// import { storeToRefs } from 'pinia';
-// import { useToast } from 'vue-toastification';
-import router from '@/router'
+import BaseButton from '@/components/BaseButton.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
-// const toast = useToast();
 const email = ref<string>('')
 const password = ref<string>('')
 const loading = ref<boolean>(false)
 
-const handleConnect = async () => {
-  if (!email.value || !password.value) {
-    // toast.error('All fields are required');
-    return
-  }
-
-  try {
-    loading.value = true
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email.value,
-      password: password.value,
-    })
-
-    if (error) {
-      toast.error(error.message)
-      return
-    }
-
-    toast.success('Signed in successfully!')
-    router.push('/')
-  } catch {
-    toast.error('Something went wrong. Please try again later.')
-  } finally {
-    loading.value = false
-  }
+const handleConnect = () => {
+  alert(
+    'La fonctionnalité de connexion est actuellement désactivée pour maintenance. Veuillez réessayer plus tard.',
+  )
+  return
 }
 </script>
 
 <template>
   <div class="flex flex-col items-center bg-purple-100 w-full h-screen justify-center gap-7">
     <div
-      class="bg-white py-8 flex flex-col gap-4 px-2 md:w-md md:h-auto size-full md:text-base md:rounded-2xl text-sm relative justify-center"
+      class="bg-white flex flex-col gap-4 px-2 min-h-fit md:text-base md:rounded-2xl text-sm relative justify-center lg:w-1/3 lg:py-12 lg:h-fit w-full h-screen"
     >
       <div class="flex flex-col items-center">
         <!-- <img :src="logo" alt="Logo" class="size-12 object-contain" /> -->
-        <h1 class="text-balance text-gray-400">Bon retour sur Soul Connect</h1>
+        <h1 class="text-balance text-gray-400">Bon retour sur faithHub</h1>
       </div>
       <form
         class="flex flex-col gap-3 p-5 rounded-2xl items-center w-full"
@@ -63,6 +36,8 @@ const handleConnect = async () => {
             id="email"
             v-model="email"
             class="border-2 border-purple-100 focus:border-purple-400 outline-0 focus:border-2 rounded-md py-2 px-1 transition-all ease-in"
+            autocomplete="username"
+            placeholder="Nom d'utilisateur"
           />
         </div>
         <div class="flex flex-col gap-1 w-full">
@@ -73,6 +48,8 @@ const handleConnect = async () => {
             id="password"
             v-model="password"
             class="border-2 border-purple-100 focus:border-purple-400 outline-0 focus:border-2 rounded-md py-2 px-1 transition-all ease-in"
+            autocomplete="current-password"
+            placeholder="Mot de passe"
           />
         </div>
         <div class="flex justify-center mt-4 w-full">
