@@ -5,6 +5,8 @@ import LoginView from '@/views/LoginView.vue'
 import SignUpView from '@/views/SignUpView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 import { useAuth } from '@/stores/auth.ts'
+import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,10 +22,11 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const auth = useAuth()
-  if(auth.user == null) {
-    const user = await auth.userData();
+  const {user} = storeToRefs(auth);
+  if(user.value == null) {
+    user.value = await auth.userData();
   }
-  const isLoggedIn = auth.user?.role;
+  const isLoggedIn = user.value?.role;
 
   if(to.path == '/board' && to.meta.requiresAuth && !isLoggedIn) {
     next('/login');
