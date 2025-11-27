@@ -5,7 +5,6 @@ import LoginView from '@/views/LoginView.vue'
 import SignUpView from '@/views/SignUpView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 import { useAuth } from '@/stores/auth.ts'
-import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 
 const router = createRouter({
