@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import BaseButton from '@/components/BaseButton.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import { useToast } from 'vue-toastification'
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/lib/supabaseClient.ts'
 
 const email = ref<string>('')
 const password = ref<string>('')
@@ -11,15 +11,23 @@ const loading = ref<boolean>(false)
 const toast = useToast()
 
 const handleConnect = async () => {
+  loading.value = true;
   try {
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data,error } = await supabase.auth.signInWithPassword({
       email: email.value,
       password: password.value,
     })
-    if (error) {
-      throw
-    toast.error("Erreur dans la création d'utilisateur.")
-    return
+    if (error){
+      toast.error(error.message);
+      return;
+    }
+    toast.success("Connecté")
+  } catch (error: unknown) {
+    if (!(error instanceof Error)) {
+      toast.error("Une erreur inconnue s'est produite");
+    }
+  } finally {
+    loading.value = false
   }
 }
 </script>

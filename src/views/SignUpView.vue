@@ -1,19 +1,37 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import BaseButton from '@/components/BaseButton.vue'
+import { supabase } from '@/lib/supabaseClient.ts'
+import { useToast } from 'vue-toastification'
+import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import {useRouter} from 'vue-router'
 
 const loading = ref<boolean>(false)
-
 const email = ref<string>('')
 const password = ref<string>('')
 const confirmedPassword = ref<string>('')
 const name = ref<string>('')
-const role = ref<string>('mentor')
+const toast = useToast()
+const router = useRouter()
 
-const handleConnect = () => {
-  alert(
-    "La fonctionnalité d'inscription est actuellement désactivée pour maintenance. Veuillez réessayer plus tard.",
-  )
+const handleConnect = async () => {
+  loading.value = true
+  try {
+    const {data,error} = await supabase.auth.signUp({
+      email: email.value,
+      password: password.value,
+    })
+    if (error) {
+      loading.value = false
+      return;
+    }
+    toast.success(`Bienvenue à bord!`)
+    await router.push('/board');
+  } catch (error:unknown) {
+    toast.error("Une erreur est survenue");
+  }finally {
+    loading.value = false;
+  }
   return
 }
 </script>
@@ -39,6 +57,7 @@ const handleConnect = () => {
             id="name"
             v-model="name"
             class="border-2 border-purple-100 focus:border-purple-400 outline-0 focus:border-2 rounded-md py-2 px-1 transition-all ease-in"
+            autocomplete="auto"
           />
         </div>
         <div class="flex flex-col gap-1 w-full">
@@ -49,6 +68,7 @@ const handleConnect = () => {
             id="email"
             v-model="email"
             class="border-2 border-purple-100 focus:border-purple-400 outline-0 focus:border-2 rounded-md py-2 px-1 transition-all ease-in"
+            autocomplete="auto"
           />
         </div>
         <div class="flex flex-col gap-1 w-full">
@@ -59,6 +79,7 @@ const handleConnect = () => {
             id="password"
             v-model="password"
             class="border-2 border-purple-100 focus:border-purple-400 outline-0 focus:border-2 rounded-md py-2 px-1 transition-all ease-in"
+            autocomplete="auto"
           />
         </div>
 
@@ -70,6 +91,7 @@ const handleConnect = () => {
             id="confirmedPassword"
             v-model="confirmedPassword"
             class="border-2 border-purple-100 focus:border-purple-400 outline-0 focus:border-2 rounded-md py-2 px-1 transition-all ease-in"
+            autocomplete="auto"
           />
         </div>
         <div class="flex justify-center mt-4 w-full">
