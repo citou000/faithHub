@@ -18,6 +18,8 @@ async function fetchPrayers(): Promise<void> {
     throw error
   }
   prayers.value = data
+  console.log(prayers.value);
+  
 }
 
 onMounted(() => {
@@ -29,7 +31,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-8 items-start justify-center lg:w-[70%] h-full">
+  <div class="flex flex-col gap-8 items-start justify-center lg:w-[70%] h-full w-full">
     <div
       class="relative rounded-t-lg overflow-x-auto w-full bg-white p-1"
       v-if="prayers.length > 0"
@@ -59,7 +61,7 @@ onMounted(() => {
               {{ prayer.subject }}
             </td>
             <td class="p-3 text-gray-600 hidden md:table-cell">
-              {{ prayer.testimonies }}
+              {{ prayer.testimonies ? prayer.testimonies : "Pas encore de témoignages" }}
             </td>
             <td class="p-3">
               {{ prayer.name }}

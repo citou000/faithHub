@@ -4,6 +4,7 @@ import BaseButton from '@/components/BaseButton.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import { useToast } from 'vue-toastification'
 import { supabase } from '@/lib/supabaseClient.ts'
+import router from '@/router'
 
 const email = ref<string>('')
 const password = ref<string>('')
@@ -22,6 +23,7 @@ const handleConnect = async () => {
       return;
     }
     toast.success("Connecté")
+    router.push('/board');
   } catch (error: unknown) {
     if (!(error instanceof Error)) {
       toast.error("Une erreur inconnue s'est produite");
