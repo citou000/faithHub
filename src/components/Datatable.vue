@@ -2,6 +2,7 @@
 // const emit = defineEmits(['column-click'])
 import { supabase } from '@/lib/supabaseClient.ts'
 import { ref, onMounted } from 'vue'
+import LoadingSpinner from './LoadingSpinner.vue'
 const headers: Array<string> = ['Sujet', 'Nom']
 interface Prayer {
   id: string | number // match your table type
@@ -11,15 +12,17 @@ interface Prayer {
 }
 
 const prayers = ref<Prayer[]>([])
+const loading = ref<boolean>(false)
 
 async function fetchPrayers(): Promise<void> {
+  loading.value = true
   const { data, error } = await supabase.from('prayers').select('*')
   if (error) {
     throw error
   }
   prayers.value = data
-  console.log(prayers.value);
-  
+  console.log(prayers.value)
+  loading.value = false
 }
 
 onMounted(() => {
@@ -34,7 +37,7 @@ onMounted(() => {
   <div class="flex flex-col gap-8 items-start justify-center lg:w-[70%] h-full w-full">
     <div
       class="relative rounded-t-lg overflow-x-auto w-full bg-white p-1"
-      v-if="prayers.length > 0"
+      v-if="prayers.length > 0 && !loading"
     >
       <table class="w-full text-sm">
         <thead>
@@ -69,6 +72,12 @@ onMounted(() => {
           </tr>
         </tbody>
       </table>
+    </div>
+    <div 
+      v-else-if="loading"
+      class="w-full flex items-center justify-center"
+    >
+      <LoadingSpinner />
     </div>
     <div v-else class="text-gray-400 w-full flex justify-center py-8 items-center h-full">
       <p>Pas encore de prière</p>
