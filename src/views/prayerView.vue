@@ -48,14 +48,14 @@ const handleSubmit = async (event: Event) => {
 </script>
 
 <template>
-  <div class="h-fit flex items-center justify-center bg-purple-100 p-6 w-full">
+  <div class="h-fit flex items-center justify-center bg-purple-100 md:p-6 w-full">
     <div
-      class="flex items-center justify-center h-full flex-col text-gray-700 lg:max-w-2xl rounded-xl bg-white"
+      class="flex items-center justify-center h-full flex-col text-gray-700 lg:max-w-2xl rounded-xl bg-white pb-8 w-full"
     >
-      <div class="w-full h-64 overflow-hidden rounded-t-xl">
+      <div class="w-full h-64 overflow-hidden md:rounded-t-xl">
         <img src="/src/assets/prayer.jpg" alt="" />
       </div>
-      <div class="w-full max-w-2xl rounded-xl px-8">
+      <div class="w-full max-w-2xl rounded-xl md:px-8 px-4">
         <h1 class="text-4xl font-bold text-gray-700 mb-6 p-4 text-left">
           Soumettez vos sujets de prière
         </h1>

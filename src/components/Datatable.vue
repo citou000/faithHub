@@ -2,7 +2,7 @@
 // const emit = defineEmits(['column-click'])
 import { supabase } from '@/lib/supabaseClient.ts'
 import { ref, onMounted } from 'vue'
-const headers: Array<string> = ['Sujet', 'Témoignages', 'Nom']
+const headers: Array<string> = ['Sujet', 'Nom']
 interface Prayer {
   id: string | number // match your table type
   subject: string | null
@@ -60,9 +60,9 @@ onMounted(() => {
             <td class="p-3 font-semibold text-md">
               {{ prayer.subject }}
             </td>
-            <td class="p-3 text-gray-600 hidden md:table-cell">
+            <!-- <td class="p-3 text-gray-600 hidden md:table-cell">
               {{ prayer.testimonies ? prayer.testimonies : "Pas encore de témoignages" }}
-            </td>
+            </td> -->
             <td class="p-3">
               {{ prayer.name }}
             </td>
